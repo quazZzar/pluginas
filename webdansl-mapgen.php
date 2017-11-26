@@ -12,12 +12,15 @@ Text Domain:  mapgen
 class Webdansl_MapGen{
 	# The class constructor
 	public function __construct(){
-		add_action( 'init', array($this, 'webdansl_setup_post_types'));
+		require dirname( __FILE__ ) . '/framework/bootstrap.php';
+		add_action( 'init', array($this, 'mapgen_setup_post_types'));
+		add_action( 'add_meta_boxes', array( $this, 'mapgen_add_metabox'));
+        add_action( 'save_post', array( $this, 'mapgen_save_metabox'));
 	}
 
 	# Triggers on plugin activation, flushes the rewrite rules
 	public function activate(){
-		$this->webdansl_setup_post_types();
+		$this->mapgen_setup_post_types();
 		flush_rewrite_rules();
 	}
 
@@ -27,7 +30,7 @@ class Webdansl_MapGen{
 	}
 
 	# Registering the custom post types
-	public function webdansl_setup_post_types(){
+	public function mapgen_setup_post_types(){
 
 		# Creating the Agents custom post type
 		$labels = array(
@@ -137,6 +140,74 @@ class Webdansl_MapGen{
 		);
 		register_post_type( 'templates', $args );
 	}
+
+	# Adding the metaboxes for the post types
+    public function mapgen_add_metabox( $post_type ) {
+        if ( in_array( $post_type, array('agents') ) ) {
+            add_meta_box(
+            	'mapgen_agents_metaboxes', 
+            	__( 'Agent Options', 'mapgen' ),
+                array( $this, 'mapgen_render_meta_box_content' ),
+                'agents',
+                'advanced',
+                'high'
+            );
+        }
+    }
+
+    public function mapgen_save_metabox( $post_id ) {
+        # Check if our nonce is set.
+        if ( ! isset( $_POST['mapgen_inner_custom_box_nonce'] ) ) {
+            return $post_id;
+        }
+        $nonce = $_POST['mapgen_inner_custom_box_nonce'];
+        # Verify that the nonce is valid.
+        if ( ! wp_verify_nonce( $nonce, 'mapgen_inner_custom_box' ) ) {
+            return $post_id;
+        }
+
+        if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+            return $post_id;
+        }
+ 
+        // Check the user's permissions.
+        if ( 'page' == $_POST['post_type'] ) {
+            if ( ! current_user_can( 'edit_page', $post_id ) ) {
+                return $post_id;
+            }
+        } else {
+            if ( ! current_user_can( 'edit_post', $post_id ) ) {
+                return $post_id;
+            }
+        }
+ 
+        /* OK, it's safe for us to save the data now. */
+ 
+        // Sanitize the user input.
+        $agent_practice_name = sanitize_text_field( $_POST['agent_practice_name'] );
+ 
+        // Update the meta field.
+        update_post_meta( $post_id, 'agent_practice_name', $agent_practice_name );
+    }
+ 
+    public function mapgen_render_meta_box_content( $post ) {
+ 
+        // Add an nonce field so we can check for it later.
+        wp_nonce_field( 'mapgen_inner_custom_box', 'mapgen_inner_custom_box_nonce' );
+ 
+        // Use get_post_meta to retrieve an existing value from the database.
+        $agent_practice_name = get_post_meta( $post->ID, 'agent_practice_name', true );
+ 
+        // Display the form, using the current value.
+        ?>
+        <div class="input_pair">
+	        <label for="agent_practice_name">
+	            <?php _e( 'Practice Name', 'mapgen' ); ?>
+	        </label>
+	        <input type="text" id="agent_practice_name" name="agent_practice_name" value="<?php echo esc_attr( $agent_practice_name ); ?>" />
+        </div>
+        <?php
+    }
 }
 
 if(class_exists('Webdansl_MapGen')){

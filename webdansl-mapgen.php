@@ -14,6 +14,7 @@ class Webdansl_MapGen{
 	public function __construct(){
 		require dirname( __FILE__ ) . '/meta-box/meta-box.php';
 		require dirname( __FILE__ ) . '/webdansl_metaboxes.php';
+		require dirname( __FILE__ ) . '/webdansl_settings.php';
 		add_action( 'init', array($this, 'mapgen_setup_post_types'));
 		add_action( 'after_setup_theme', array($this, 'mapgen_support_features'), 11 );
 	}
@@ -149,12 +150,17 @@ class Webdansl_MapGen{
 if(class_exists('Webdansl_MapGen')){
 	$new_Webdansl_MapGen = new Webdansl_MapGen();	
 }
+
 if(class_exists('RWMB_Loader')){
 	if(class_exists('MapGenMeta')){
 		$posts_metas = new MapGenMeta();
 	}
-
 }
+
+if(class_exists('MapGenAdminSettings')){
+	$admin_settings = new MapGenAdminSettings();
+}
+
 
 #On Activation
 register_activation_hook( __FILE__, array($new_Webdansl_MapGen, 'activate'));

@@ -127,7 +127,7 @@ $(document).ready(function(){
 	$("#GetData").click(function(){
 		$.ajax({
 		type: "GET",
-		url: "csvFile.csv",
+		url: $(this).data('csv_path'),
 		success: function(data){
 				response = csvJSON(data);
 				alert(data);
@@ -141,10 +141,10 @@ $(document).ready(function(){
 	})
 	
 	$("#SaveImg").click(function(){
-		SaveImg(0,1);
+		SaveImg(0,1, $(this).data('script_path'));
 	});
 	
-	function SaveImg(n,i){
+	function SaveImg(n,i, php_script_path){
 		if(n < response.length && i < 3){
 			
 			workAddress = $('#workaddr').val() + ', ' + $('#workcity').val();			
@@ -187,7 +187,7 @@ $(document).ready(function(){
 					setTimeout(function(){
 					$.ajax({
 						type: "POST",
-						url: "imgUpload.php",
+						url: php_script_path,
 						data: {url: imgurl,
 					   		name: filename},
 						success: function(data){
@@ -203,7 +203,7 @@ $(document).ready(function(){
 							return err;
 							}
 					});
-					}, 14000);
+					}, 15000);
 				}));
 		}
 		else{
@@ -216,9 +216,10 @@ $(document).ready(function(){
 	$('#upload').on('click', function() {
     var file_data = $('#sortpicture').prop('files')[0];   
     var form_data = new FormData();                  
-    form_data.append('file', file_data);                           
+    form_data.append('file', file_data); 
+
     $.ajax({
-                url: 'upload.php', // point to server-side PHP script 
+                url: $(this).data('script_path'), // point to server-side PHP script 
                 dataType: 'text',  // what to expect back from the PHP script, if anything
                 cache: false,
                 contentType: false,
@@ -226,6 +227,7 @@ $(document).ready(function(){
                 data: form_data,                         
                 type: 'post',
                 success: function(php_script_response){
+                	console.log(php_script_response);
                     alert('Success Upload!'); // display response from the PHP script, if any
                 }
      	});

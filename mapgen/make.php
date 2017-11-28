@@ -3,6 +3,7 @@
 
 $tmpName = $_FILES['csv']['tmp_name'];
 $csv = array_map('str_getcsv', file($tmpName));
+//var_dump($csv);
 
 require_once('fpdf.php');
 require_once('fpdi.php');
@@ -19,7 +20,7 @@ $pdf = new FPDI();
 $pdf->AddFont('Lato','','Lato-Regular.php');
 $pdf->AddFont('Lato Bold','','Lato-Bold.php');
 
-$fidx = $_POST['first']-1;
+//$fidx = $_POST['first']-1;
 
 
 //$pdf->SetLeftMargin(100);
@@ -65,8 +66,8 @@ foreach($csv as $crow){
 	$Lname = $crow[$indx['Lname']];
 		
 	$tmp = explode(' at ', $crow[$indx['event']]);
-	$event_date = date("D, F j Y", strtotime($tmp[0]));
-	$event_time = $tmp[1];
+	@$event_date = date("D, F j Y", strtotime($tmp[0]));
+	@$event_time = $tmp[1];
 	
 	
 	if( 1 ){
@@ -116,7 +117,7 @@ foreach($csv as $crow){
 		$pdf->Text(19+$Xadj, 258+$Yadj, $_POST['workshop-venue']); //workshop venue
 		$pdf->SetFont('Lato','',16);
 		
-		if($_POST['workshop-addr2'] != 'null' && !empty($_POST['workshop-addr2'])){
+		if($_POST['workshop-add2'] != 'null' && !empty($_POST['workshop-add2'])){
 			
 			$pdf->Text(19+$Xadj, 263+$Yadj, $_POST['workshop-add1'] . ' '. $_POST['workshop-add2'] . ', ' . $_POST['workshop-city'] . ' ' . $_POST['workshop-state'] . ' ' . $_POST['workshop-zip']); //workshop full address
 		}else{

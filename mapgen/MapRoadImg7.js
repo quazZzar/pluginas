@@ -117,17 +117,17 @@ function createMarker(opts) {
 }
 
 
-$(document).ready(function(){
+jQuery(document).ready(function(){
 	var imgurl;
 	var filename;
 	var response;
 	var homeAddress;
 	var workAddress;
 	var n = 0;
-	$("#GetData").click(function(){
-		$.ajax({
+	jQuery("#GetData").click(function(){
+		jQuery.ajax({
 		type: "GET",
-		url: $(this).data('csv_path'),
+		url: jQuery(this).data('csv_path'),
 		success: function(data){
 				response = csvJSON(data);
 				alert(data);
@@ -140,21 +140,21 @@ $(document).ready(function(){
 		});
 	})
 	
-	$("#SaveImg").click(function(){
-		SaveImg(0,1, $(this).data('script_path'));
+	jQuery("#SaveImg").click(function(){
+		SaveImg(0,1, jQuery(this).data('script_path'));
 	});
 	
 	function SaveImg(n,i, php_script_path){
 		if(n < response.length && i < 3){
 			
-			workAddress = $('#workaddr').val() + ', ' + $('#workcity').val();			
+			workAddress = jQuery('#workaddr').val() + ', ' + jQuery('#workcity').val();			
 			
 			console.log(response[n]['Home Address 1']);			
 			
 			
 			if( response[n]['Home Address 1'] == 'Home Address 1' || response[n]['Home Address 1'].length == 0 || response[n]['Home City'].length == 0 || response[n]['Home State'].length == 0 || response[n]['Home Zip'].length == 0){
 				
-				homeAddress = $('#workcity').val();
+				homeAddress = jQuery('#workcity').val();
 			}
 			else{
 				
@@ -185,7 +185,7 @@ $(document).ready(function(){
 			
 			MapUrl(homeAddress, workAddress, n, (function(imgurl){
 					setTimeout(function(){
-					$.ajax({
+					jQuery.ajax({
 						type: "POST",
 						url: php_script_path,
 						data: {url: imgurl,
@@ -213,13 +213,13 @@ $(document).ready(function(){
 		return;
 	}
 
-	$('#upload').on('click', function() {
-    var file_data = $('#sortpicture').prop('files')[0];   
+	jQuery('#upload').on('click', function() {
+    var file_data = jQuery('#sortpicture').prop('files')[0];   
     var form_data = new FormData();                  
     form_data.append('file', file_data); 
 
-    $.ajax({
-                url: $(this).data('script_path'), // point to server-side PHP script 
+    jQuery.ajax({
+                url: jQuery(this).data('script_path'), // point to server-side PHP script 
                 dataType: 'text',  // what to expect back from the PHP script, if anything
                 cache: false,
                 contentType: false,

@@ -35,13 +35,13 @@ class MapGenAdminSettings{
 		<div class="map_gen_wrap">
 			<div class="the_form">
 				<form action="<?php echo admin_url('admin.php?page=webdansl_mapgen_pdf_gen'); ?>" method="post">
-					<div class="input-field">
+					<!-- <div class="input-field">
 						<label for="workvenu">Workshop Venue:</label>
 						<input id="workvenu" type="text" name="workvenu" value="M&O Marketing"/>
 					</div>
 					
 					<div class="input-field">
-						<label for="workaddr">Workshop Street:</label>			
+						<label for="workaddr">Workshop Address 1:</label>			
 						<input id="workaddr" type="text" name="workaddr" value="27777 Franklin Rd"/>
 					</div>
 
@@ -58,17 +58,31 @@ class MapGenAdminSettings{
 					<div class="input-field">
 						<label for="workzip">Workshop ZIP:</label>
 						<input id="workzip" type="text" name="workzip" value="48034"/>
+					</div> -->
+
+					<div class="input-field">
+						<label for="sortpicture">Choose a CSV:</label>
+						<input id="sortpicture" type="file" name="sortpic" />
 					</div>
 
-					<div class="input-field">	
-						<button type="submit">Go to the Generator</button>
+					<div class="input-field">
+						<label for="upload">Upload it:</label>
+						<button id="upload" class="button button-primary" data-script_path="<?php echo plugin_dir_url( __FILE__ ).'mapgen/upload.php' ?>">Upload</button>
 					</div>
-				</form>
-				
-				<input id="sortpicture" type="file" name="sortpic" /><br>	
-				<button id="upload" data-script_path="<?php echo plugin_dir_url( __FILE__ ).'mapgen/upload.php' ?>">Upload</button>
-				<button id="GetData" data-csv_path="<?php echo plugin_dir_url( __FILE__ ).'mapgen/csvFile.csv' ?>">GetData</button>
-				<button id="SaveImg" data-script_path="<?php echo plugin_dir_url( __FILE__ ).'mapgen/imgUpload.php' ?>">SaveImg</button>
+
+					<div class="input-field">
+						<label for="GetData">Get the data from it:</label>
+						<button id="GetData" class="button button-primary" data-csv_path="<?php echo plugin_dir_url( __FILE__ ).'mapgen/csvFile.csv' ?>">GetData</button>
+					</div>
+
+					<div class="input-field">
+						<label for="SaveImg">Get map images from data:</label>
+						<button id="SaveImg" class="button button-primary" data-script_path="<?php echo plugin_dir_url( __FILE__ ).'mapgen/imgUpload.php' ?>">SaveImg</button>
+					</div>
+
+					<div class="input-field">
+						<label for="genbtn">Go to PDF Generator:</label>
+						<button class="button button-primary" id="genbtn" type="submit">Go to the Generator</butt
 			</div>
 			<div class="map_wrapper">
 				<div id="map_canvas"></div>
@@ -138,21 +152,50 @@ class MapGenAdminSettings{
 						<input id="agent-zip" type="text" name="agent-zip" value=""/>
 					</div>
 					<div class="input-field">
-						<label for="agent-phone">Agent ZIP:</label>
+						<label for="agent-phone">Agent Phone:</label>
 						<input id="agent-phone" type="text" name="agent-phone" value=""/>
 					</div>
-
-					Workshop Venue: <input type="text" name="workshop-venue" value="<?php echo $_POST['workvenu']; ?>" /><br>
-					Workshop Room: <input type="text" name="workshop-room" value="" /><br>
-					Workshop Address 1: <input type="text" name="workshop-add1" value="<?php echo $_POST['workaddr']; ?>" /><br>
-					Workshop Address 2: <input type="text" name="workshop-add2" value="" /><br>
-					Workshop date: <input type="text" name="workshop-date" value="" /><br>
-					Workshop time: <input type="text" name="workshop-time" value="" /><br>
-					Workshop State: <input type="text" name="workshop-state" value="" /><br>
-					Workshop zip: <input type="text" name="workshop-zip" value="" /><br>
-					Workshop City/State/ZIP: <input type="text" name="workshop-city" value="<?php echo $_POST['workcity']; ?>" /><br>
-					<input type="file" name="csv" value="" />
-					<input type="submit" name="submit" value="Save" />
+					<div class="input-field">
+						<label for="workshop-venue">Workshop Venue:</label>
+						<input id="workshop-venue" type="text" name="workshop-venue" value=""/>
+					</div>
+					<div class="input-field">
+						<label for="workshop-room">Workshop Room:</label>
+						<input id="workshop-room" type="text" name="workshop-room" value=""/>
+					</div>
+					<div class="input-field">
+						<label for="workshop-add1">Workshop Address 1:</label>
+						<input id="workshop-add1" type="text" name="workshop-add1" value=""/>
+					</div>
+					<div class="input-field">
+						<label for="workshop-add2">Workshop Address 2:</label>
+						<input id="workshop-add2" type="text" name="workshop-add2" value=""/>
+					</div>
+					<div class="input-field">
+						<label for="workshop-date">Workshop Date:</label>
+						<input id="workshop-date" type="text" name="workshop-date" value=""/>
+					</div>
+					<div class="input-field">
+						<label for="workshop-time">Workshop Time:</label>
+						<input id="workshop-time" type="text" name="workshop-time" value=""/>
+					</div>
+					<div class="input-field">
+						<label for="workshop-city">Workshop City:</label>
+						<input id="workshop-city" type="text" name="workshop-city" value=""/>
+					</div>
+					<div class="input-field">
+						<label for="workshop-state">Workshop State:</label>
+						<input id="workshop-state" type="text" name="workshop-state" value=""/>
+					</div>
+					<div class="input-field">
+						<label for="workshop-state">Workshop ZIP:</label>
+						<input id="workshop-zip" type="text" name="workshop-zip" value=""/>
+					</div>
+					<div class="input-field">
+						<label for="csv">The CSV File:</label>
+						<input type="file" name="csv" id="csv" value="" />
+					</div>
+					<button type="submit" class="button button-primary" name="submit">Save</button>
 				</form>
 			</div>
 		</div>

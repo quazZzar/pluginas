@@ -35,7 +35,7 @@ class MapGenAdminSettings{
 		<div class="map_gen_wrap">
 			<div class="the_form">
 				<form action="<?php echo admin_url('admin.php?page=webdansl_mapgen_pdf_gen'); ?>" method="post">
-					<!-- <div class="input-field">
+					<div class="input-field">
 						<label for="workvenu">Workshop Venue:</label>
 						<input id="workvenu" type="text" name="workvenu" value="M&O Marketing"/>
 					</div>
@@ -47,10 +47,10 @@ class MapGenAdminSettings{
 
 					<div class="input-field">
 						<label for="workcity">Workshop City:</label>
-						<input id="workcity" type="text" name="workcity" value="Southfield"/>
+						<input id="workcity" type="text" name="workcity" value="Southfield, MI 48034"/>
 					</div>
 
-					<div class="input-field">
+					<!-- <div class="input-field">
 						<label for="workstate">Workshop State:</label>
 						<input id="workstate" type="text" name="workstate" value="MI"/>
 					</div>
@@ -62,27 +62,28 @@ class MapGenAdminSettings{
 
 					<div class="input-field">
 						<label for="sortpicture">Choose a CSV:</label>
-						<input id="sortpicture" type="file" name="sortpic" />
+						<input id="sortpicture" type="file" name="sortpic" value=""/>
 					</div>
 
 					<div class="input-field">
 						<label for="upload">Upload it:</label>
-						<button id="upload" class="button button-primary" data-script_path="<?php echo plugin_dir_url( __FILE__ ).'mapgen/upload.php' ?>">Upload</button>
+						<input type="button" id="upload" class="button button-primary" data-script_path="<?php echo plugin_dir_url( __FILE__ ).'mapgen/upload.php' ?>" value="Upload"/>
 					</div>
 
 					<div class="input-field">
 						<label for="GetData">Get the data from it:</label>
-						<button id="GetData" class="button button-primary" data-csv_path="<?php echo plugin_dir_url( __FILE__ ).'mapgen/csvFile.csv' ?>">GetData</button>
+						<input type="button" id="GetData" class="button button-primary" data-csv_path="<?php echo plugin_dir_url( __FILE__ ).'mapgen/csvFile.csv' ?>" value="GetData"/>
 					</div>
 
 					<div class="input-field">
 						<label for="SaveImg">Get map images from data:</label>
-						<button id="SaveImg" class="button button-primary" data-script_path="<?php echo plugin_dir_url( __FILE__ ).'mapgen/imgUpload.php' ?>">SaveImg</button>
+						<input type="button" id="SaveImg" class="button button-primary" data-script_path="<?php echo plugin_dir_url( __FILE__ ).'mapgen/imgUpload.php' ?>" value="SaveImg"/>
 					</div>
 
 					<div class="input-field">
 						<label for="genbtn">Go to PDF Generator:</label>
-						<button class="button button-primary" id="genbtn" type="submit">Go to the Generator</butt
+						<button class="button button-primary" id="genbtn" type="submit">Go to the Generator</button>
+					</div>
 			</div>
 			<div class="map_wrapper">
 				<div id="map_canvas"></div>
